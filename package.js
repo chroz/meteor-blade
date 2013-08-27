@@ -47,7 +47,7 @@ Package.register_extension("blade", function(bundle, srcPath, servePath, where) 
 				//just put the template itself in blade._cachedViews
 				JSON.stringify(templateName + ".blade") + "]=" + tmpl.toString() + ";" +
 				//define a template with the proper name
-				"Meteor._def_template(" + JSON.stringify(templateName) +
+				"Template.__define__(" + JSON.stringify(templateName) +
 					//when the template is called...
 					", function(data, obj) {data = data || {};" +
 						//helpers work... even functions, thanks to Object.defineProperty!
@@ -95,6 +95,9 @@ Package.register_extension("blade", function(bundle, srcPath, servePath, where) 
 });
 
 Package.on_use(function(api) {
+	if (api.export != 'undefined') {
+		api.export (["Spark"],["client","server"]);
+	}
 	//The plain-old Blade runtime
 	api.add_files('runtime.js', 'client');
 	//The Blade runtime with overridden loadTemplate function, designed for Meteor

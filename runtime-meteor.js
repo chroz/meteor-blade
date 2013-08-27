@@ -41,7 +41,8 @@
 		if(name.substr(-6) == ".blade")
 			name = name.substr(0, name.length - 6);
 		//Render the child template to get the reactive HTML (and to populate `info`)
-		var reactiveHTML = Spark.labelBranch(branchLabel, function() {
+		var _spark = (Spark)?Spark:window.Spark; // Why isn't Spark available here?
+		var reactiveHTML = _spark.labelBranch(branchLabel, function() {
 			return info.partials[name](info.locals);
 		});
 		//If no block definitions were found in the parent and child templates, we can use the reactive HTML
@@ -58,6 +59,6 @@
 	};
 	
 	//Use Spark as the live update engine
-	for(var i in Spark)
-		blade.LiveUpdate[i] = Spark[i];
+	for(var i in window.Spark)
+		blade.LiveUpdate[i] = window.Spark[i];
 })();
