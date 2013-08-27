@@ -59,6 +59,7 @@
 	};
 	
 	//Use Spark as the live update engine
-	for(var i in window.Spark)
-		blade.LiveUpdate[i] = window.Spark[i];
+	var _spark = (Spark)?Spark:window.Spark; // Why isn't Spark available here?
+	for(var i in _spark)
+		blade.LiveUpdate[i] = _spark[i];
 })();
